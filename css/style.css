@@ -25,6 +25,10 @@ h1 {
     padding-top: 25px;
 }
 
+p{
+    text-transform: capitalize;
+}
+
 .custom-card {
     border-radius: 0;
     border: 1px solid #ddd;
@@ -55,4 +59,12 @@ h1 {
     height: auto;
     z-index: 10;
 
+}
+
+.card{
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: rotate(15deg); 
 }
