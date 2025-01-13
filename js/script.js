@@ -1,19 +1,19 @@
 // DOM ElEMENTS
-const imgCard = document.getElementById('grid-img');
+const imgCardElm = document.getElementById('grid-img');
+const overlayElm = document.getElementById('overlay');
+const overlayImageElm = document.getElementById('overlay-image');
+const closeButtonElm = document.getElementById('close-btn');
+const imagesElm = document.querySelectorAll('.img-fluid');
 
 // Funzione per generare immagini
 const imgRenderer = () => {
-    // AXIOS
-    axios
-        .get('https://jsonplaceholder.typicode.com/photos?_limit=6')
+    axios.get('https://jsonplaceholder.typicode.com/photos?_limit=6')
         .then((res) => {
-            imgCard.innerHTML = "";
+            imgCardElm.innerHTML = "";
 
-            // Iterazione sui dati ricevuti
             res.data.forEach((img) => {
-                // Creazione del contenitore della card
                 const col = document.createElement('div');
-                col.className = 'col-lg-4 col-md-6 col-sm-12';
+                col.className = 'col-sm-12 col-md-6 col-lg-4';
 
                 col.innerHTML = `
                     <img src="img/pin.svg" class="pin">
@@ -26,10 +26,29 @@ const imgRenderer = () => {
                 `;
 
                 // Aggiunta della card al contenitore principale
-                imgCard.appendChild(col);
+                imgCardElm.appendChild(col);
+
+                // Aggiungi event listener per ogni immagine dinamica
+                const image = col.querySelector('.img-fluid');
+                image.addEventListener('click', () => showOverlay(image.src));
             });
         });
 };
 
+
+
+// Aggiungo listener al pulsante di chiusura
+closeButtonElm.addEventListener('click', hideOverlay);
+
+// Mostra l'overlay con l'immagine selezionata
+function showOverlay(imageSrc) {
+    overlayImageElm.src = imageSrc; // Imposto l'immagine nell'overlay
+    overlayElm.classList.remove('hidden'); // Rimuovo la classe hidden
+}
+
+// Nascondo l'overlay
+function hideOverlay() {
+    overlayElm.classList.add('hidden'); // Aggiungo la classe hidden
+}
 // PAGE LOAD
 imgRenderer();
